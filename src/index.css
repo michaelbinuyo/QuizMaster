@@ -16,19 +16,35 @@ body {
   /* #7cc6fe; */
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   min-height: 100vh;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  margin: auto;
+  width: 60vw;
 }
 @media (max-width: 400px) {
   .app {
     width: fit-content !important;
   }
 }
-.app {
+.app .question {
+  width: 600px;
+  margin-top: 1rem;
+  padding: 3rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.question,
+.score-section,
+.admin {
   background-color: #4059ad;
   /* #252d4a; */
-  width: 450px;
-  min-height: 200px;
+  /* width: 450px; */
+  /* min-height: 200px; */
   height: min-content;
   border-radius: 15px;
   padding: 20px;
@@ -36,7 +52,8 @@ body {
   gap: 2rem;
   box-shadow: 10px 10px 42px 0px rgba(27, 27, 27, 0.5);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  margin: auto;
 }
 
 .score-section {
@@ -70,9 +87,9 @@ body {
   }
 }
 .question-text {
-  margin-bottom: 12px;
+  /* margin-bottom: 12px; */
 }
-
+/* 
 .timer-text {
   background: rgb(230, 153, 12);
   padding: 15px;
@@ -84,18 +101,18 @@ body {
 }
 .timer-text:hover {
   background: rgb(230, 153, 12);
-}
+} */
 
 /* ANSWERS/RIGHT SECTION */
 .answer-section {
   width: 100%;
-  display: flex;
+  display: grid;
   flex-direction: column;
   gap: 1rem;
+  grid-template-columns: repeat(2, 1fr);
   justify-content: space-between;
 }
-
-button {
+.answer-section button {
   width: 100%;
   font-size: 16px;
   color: #ffffff;
@@ -103,22 +120,23 @@ button {
   border-radius: 15px;
   text-align: start;
   display: flex;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   justify-content: flex-start;
   align-items: center;
   border: 2px solid #6b9ac4;
   cursor: pointer;
 }
-
 .correct {
-  background-color: #2f922f !important;
+  background-color: var(--success);
 }
+
 a {
   text-decoration: none;
 }
-.incorrect {
-  background-color: #ff3333 !important;
+.correct {
+  background-color: var(--success) !important;
 }
+
 .btn {
   display: flex;
   justify-content: space-between;
@@ -134,4 +152,62 @@ button:focus {
 
 button svg {
   margin-right: 5px;
+}
+/* //table/ */
+tbody,
+table,
+th,
+tr,
+td {
+  border-radius: 20px;
+}
+table {
+  background-color: var(--table);
+  cursor: pointer;
+  margin: auto;
+  margin-bottom: auto !important;
+}
+
+:root {
+  --primary: #4059ad;
+  --table: #555e7d80;
+}
+.start {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  align-items: center;
+}
+.number input {
+  outline: none;
+  color: gray;
+  border-radius: 10px;
+  padding: 0.5rem;
+  border: none;
+  width: 100px;
+}
+.number {
+  width: 50%;
+  margin: auto;
+  font-size: 1.5rem;
+}
+.number p {
+  color: grey;
+}
+.number button {
+  width: fit-content;
+}
+.confirm {
+  font-size: 1.5rem;
+}
+.confirm a {
+  color: var(--success);
+}
+.start {
+  margin: auto;
+  font-size: 1.5rem;
+}
+.start button {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
 }

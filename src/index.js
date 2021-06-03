@@ -5,5 +5,6 @@ import ReactDOM from "react-dom";
 // import App from "./temp/App";
 // import App from "./MusicApp/Play";
 // import App from "./MusicApp/App";
-import App from "./QuizApp/App";
+import "bootstrap/dist/css/bootstrap.min.css";
+import App from "./App";
 ReactDOM.render(<App />, document.getElementById("root"));

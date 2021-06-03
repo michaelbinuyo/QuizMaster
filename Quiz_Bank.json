@@ -1,0 +1,222 @@
+[
+  {
+    "questionText": "In any programming language, what is the most common way to iterate through an array?",
+    "correct": "'For' loops",
+    "answerOption": [
+      "'For' loops",
+      "'If' Statements",
+      "'Do-while' loops",
+      "'While' loops"
+    ]
+  },
+  {
+    "questionText": "Which computer hardware device provides an interface for all other connected devices to communicate?",
+    "correct": "Motherboard",
+    "answerOption": [
+      "Central Processing Unit",
+      "Hard Disk Drive",
+      "Motherboard",
+      "Random Access Memory"
+    ]
+  },
+  {
+    "questionText": "If you were to code software in this language you'd only be able to type 0's and 1's",
+    "correct": "Binary",
+    "answerOption": ["JavaScript", "Binary", "C++", "Python"]
+  },
+  {
+    "questionText": "The series of the Intel HD graphics generation succeeding that of the 5000 and 6000 series (Broadwell) is called:",
+    "correct": "HD Graphics 500",
+    "answerOption": [
+      "HD Graphics 700 ",
+      "HD Graphics 600",
+      "HD Graphics 500",
+      "HD Graphics 7000"
+    ]
+  },
+  {
+    "questionText": "How many kilobytes in one gigabyte (in decimal)?",
+    "correct": "1000000",
+    "answerOption": ["1000000", "1024", "1000", "1048576"]
+  },
+  {
+    "questionText": "This mobile OS held the largest market share in 2012",
+    "correct": "iOS",
+    "answerOption": ["Android", "BlackBerry", "iOS", "Symbian"]
+  },
+  {
+    "questionText": "The C programming language was created by this American computer scientist ",
+    "correct": "Dennis Ritchie",
+    "answerOption": [
+      "Tim Berners Lee",
+      "al-Khwārizmī",
+      "Dennis Ritchie",
+      "Willis Ware"
+    ]
+  },
+  {
+    "questionText": "Which programming language shares its name with an island in Indonesia?",
+    "correct": "Java",
+    "answerOption": ["Python", "C", "Java", "Jakarta"]
+  },
+  {
+    "questionText": "How long is an IPv6 address?",
+    "correct": "128 bits",
+    "answerOption": ["32 bits", "64 bits", "128 bits", "128 bytes"]
+  },
+  {
+    "questionText": "What language does Nodejs use?",
+    "correct": "JavaScript",
+    "answerOption": ["Java", "Java Source", "JavaScript", "Joomla Source Code"]
+  },
+  {
+    "questionText": "What does CPU stand for?",
+    "correct": "Central Processing Unit",
+    "answerOption": [
+      "Central Process Unit",
+      "Central Processing Unit",
+      "Computer Personal Unit",
+      "Central Processor Unit"
+    ]
+  },
+  {
+    "questionText": "In web design, what does CSS stand for?",
+    "correct": "Cascading Style Sheet",
+    "answerOption": [
+      "Counter Strike: Source",
+      "Cascading Style Sheet",
+      "Corrective Style Sheet",
+      "Computer Style Sheet"
+    ]
+  },
+  {
+    "questionText": "The numbering system with a radix of 16 is more commonly referred to as ",
+    "correct": "Hexidecimal",
+    "answerOption": ["Hexidecimal", "Binary", "Duodecimal", "Octal"]
+  },
+  {
+    "questionText": "How many values can a single byte represent?",
+    "correct": "256",
+    "answerOption": ["8", "1", "256", "1024"]
+  },
+  {
+    "questionText": "What does the computer software acronym JVM stand for?",
+    "correct": "Java Virtual Machine",
+    "answerOption": [
+      "Java Virtual Machine",
+      "Java Vendor Machine",
+      "Java Visual Machine",
+      "Just Virtual Machine"
+    ]
+  },
+  {
+    "questionText": "According to the International System of Units, how many bytes are in a kilobyte of RAM?",
+    "correct": "1000",
+    "answerOption": ["512", "1024", "1000", "500"]
+  },
+  {
+    "questionText": "In the programming language Java, which of these keywords would you put on a variable to make sure it doesn't get modified?",
+    "correct": "Final",
+    "answerOption": ["Static", "Private", "Final", "Public"]
+  },
+  {
+    "questionText": "What is the most preferred image format used for logos in the Wikimedia database?",
+    "correct": "svg",
+    "answerOption": ["png", "jpeg", "svg", "gif"]
+  },
+  {
+    "questionText": "In \"Hexadecimal\", what color would be displayed from the color code? \"#00FF00\"?",
+    "correct": "Green",
+    "answerOption": ["Red", "Blue", "Green", "Yellow"]
+  },
+  {
+    "questionText": "In computing, what does LAN stand for?",
+    "correct": "Local Area Network",
+    "answerOption": [
+      "Long Antenna Node",
+      "Light Access Node",
+      "Local Area Network",
+      "Land Address Navigation"
+    ]
+  },
+  {
+    "questionText": "What does the \"MP\" stand for in MP3?",
+    "correct": "Moving Picture",
+    "answerOption": [
+      "Music Player",
+      "Moving Picture",
+      "Multi Pass",
+      "Micro Point"
+    ]
+  },
+  {
+    "questionText": "On Twitter, what is the character limit for a Tweet?",
+    "correct": "140",
+    "answerOption": ["140", "120", "160", "100"]
+  },
+  {
+    "questionText": "What does GHz stand for?",
+    "correct": "Gigahertz",
+    "answerOption": ["Gigahertz", "Gigahotz", "Gigahetz", "Gigahatz"]
+  },
+  {
+    "questionText": "The programming language 'Swift' was created to replace what other programming language?",
+    "correct": "Objective-C",
+    "answerOption": ["Objective-C", "C#", "Ruby", "C++"]
+  },
+  {
+    "questionText": "What does LTS stand for in the software market?",
+    "correct": "Long Term Support",
+    "answerOption": [
+      "Long Taco Service",
+      "Ludicrous Transfer Speed",
+      "Long Term Support",
+      "Ludicrous Turbo Speed"
+    ]
+  },
+  {
+    "questionText": "In computing, what does MIDI stand for?",
+    "correct": "Musical Instrument Digital Interface",
+    "answerOption": [
+      "Musical Interface of Digital Instruments",
+      "Musical Instrument Digital Interface",
+      "Modular Interface of Digital Instruments",
+      "Musical Instrument Data Interface"
+    ]
+  },
+  {
+    "questionText": "What is the code name for the mobile operating system Android 70?",
+    "correct": "Nougat",
+    "answerOption": [
+      "Nougat",
+      "Ice Cream Sandwich",
+      "Jelly Bean",
+      "Marshmallow"
+    ]
+  },
+  {
+    "questionText": "What is the domain name for the country Tuvalu?",
+    "correct": "tv",
+    "answerOption": ["tv", "tu", "tt", "tl"]
+  },
+  {
+    "questionText": "Which company was established on April 1st, 1976 by Steve Jobs, Steve Wozniak and Ronald Wayne?",
+    "correct": "Apple",
+    "answerOption": ["Apple", "Microsoft", "Atari", "Commodore"]
+  },
+  {
+    "questionText": "When Gmail first launched, how much storage did it provide for your email?",
+    "correct": "1GB",
+    "answerOption": ["1GB", "512MB", "5GB", "Unlimited"]
+  },
+  {
+    "questionText": "What does the Prt Sc button do?",
+    "correct": "Captures what's on the screen and copies it to your clipboard",
+    "answerOption": [
+      "Nothing",
+      "Captures what's on the screen and copies it to your clipboard",
+      "Saves a png file of what's on the screen in your screenshots folder in photos",
+      "Closes all windows"
+    ]
+  }
+]
