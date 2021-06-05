@@ -2,15 +2,18 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 const connectDB = async () => {
-  const url = "mongodb://127.0.0.1:27017/projectLast";
+  const localUrl = "mongodb://127.0.0.1:27017/projectLast";
   // mongodb+srv://emanuelone:85740014@cluster0.ogcs0.gcp.mongodb.net/projectLast?retryWrites=true&w=majority
+  //change URL for atlas
+  const atlasUrl = process.env.MONGO_URLs;
+
   try {
-    const conn = mongoose.connect(process.env.LOCAL_DB || url, {
+    const conn = mongoose.connect(atlasUrl || localUrl, {
       useCreateIndex: true,
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
-    console.log(`MongoDB Connected ${(await conn).connection.host}`);
+    console.log(`MongoDB Connected to ${atlasUrl ? atlasUrl : localUrl}`);
   } catch (error) {
     console.error(`Error ${error.message}`);
     process.exit(1);

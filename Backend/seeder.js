@@ -44,7 +44,7 @@ const findData = async (arr) => {
     // process.exit(1);
   }
 };
-const UpdateScores = async (arr) => {
+const UpdateScores = async () => {
   try {
     Score.find({}, (err, scores) => {
       scores.map(async (score) => {

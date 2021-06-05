@@ -1,74 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import axios from "axios";
-import question from "../Quiz.json";
-
-const Question = () => {
-  const [questions, _] = useState(shuffle(question).filter((e, i) => i < 10));
-  // generate rand from 0 -5
-  //to be changed to btns
-  const [rand, setRand] = useState(Math.floor(Math.random() * 5 + 1));
+import T from "./Table";
+const Question = ({ questions }) => {
+  const user = 2;
   const history = useHistory();
-  // get the current question
-  const current = parseInt(useParams().id);
-  // console.log(current);
-  function shuffle(arr) {
-    const newArr = [...arr];
-    const Arr = [...newArr];
-    newArr.forEach((e, i) => {
-      const rand = Math.floor(Math.random() * Arr.length);
-      newArr[i] = Arr[rand];
-      Arr.splice(rand, 1);
-    });
-    return newArr;
-  }
+  // get the questionIndex question
+  const questionIndex = parseInt(useParams().id);
+  // console.log(questionIndex);
+  const bonusUrl = `/q/bonus/${questionIndex}=user${user}`;
 
-  window.addEventListener("keypress", (e) => {
-    console.log(e, "for question");
-  });
-
-  // console.log(current, "id");
+  // console.log(questionIndex, "id");
   function handleClick(e, index) {
     const pickedOption = e.target.innerText.slice(3);
-    const answer = questions[current].correct;
+    const answer = questions[questionIndex].correct;
     console.log(answer, pickedOption);
     if (pickedOption.includes(answer)) {
       // e.target.classLis;
-      const no = current + 1;
+      const nextQuestionIndex = questionIndex + 1;
       e.target.classList.add("correct");
       const ele = e.target.classList;
-      if (window.location.pathname.split("=")[1]) {
-        axios
-          .post("http://localhost:5000/bonus/" + rand)
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err.message));
-      } else {
-        axios
-          .post("http://localhost:5000/user/" + rand)
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err.message));
-      }
+
+      axios
+        .post("http://localhost:5000/user/" + user)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err.message));
+
       setTimeout(() => {
-        // history.push("/q/" + no);
+        // history.push("/q/" + nextQuestionIndex);
         ele.remove("correct");
-        // window.location.href = "http://localhost:3000/q/" + no;
-        history.push("/q/" + no);
-        setTime(5);
-        setRand(Math.floor(Math.random() * 5 + 1));
+        // window.location.href = "http://localhost:3000/q/" + nextQuestionIndex;
+        history.push("/q/" + nextQuestionIndex);
+        setTime(10);
       }, 500);
     } else {
       // window.location.href =
-      //   "http://localhost:3000/q/" + current + `?bonus=${current}`;
-      history.push("/q/" + current + "bonus=" + current);
-      setTime(5);
-      setRand(Math.floor(Math.random() * 5 + 1));
+      //   "http://localhost:3000/q/" + questionIndex + `?bonus=${questionIndex}`;
 
       axios
-        .post("http://localhost:5000/wrong/" + rand)
-        .then((res) => console.log(res))
+        .post("http://localhost:5000/wrong/" + user)
+        .then(() => history.push(bonusUrl))
         .catch((err) => console.log(err.message));
+      setTime(5);
     }
-    console.log(answer, current + 1);
+    console.log(answer, questionIndex + 1);
   }
 
   const entities = {
@@ -77,99 +52,86 @@ const Question = () => {
     // add more if needed
   };
   const obj = ["A", "B", "C", "D"];
-  const [time, setTime] = useState(5);
-  const [qtime, setqTime] = useState(false);
-  const [state, setState] = useState(0);
+  const [time, setTime] = useState(10);
+  const nextQuestionIndex = questionIndex + 1;
+  // localhost:3000/q/bonus/0=user1
+  // http: console.log(bonusUrl);
   useEffect(() => {
-    const no = current + 1;
-
     const interval = setInterval(() => {
       const newTime = time - 1;
       setTime(newTime);
-    }, 2000);
-    if (time <= 0 && !qtime) {
+    }, 5000000);
+    if (time <= 0) {
       clearInterval(interval);
-      history.push("/q/" + no);
-      setTime(5);
-      setRand(Math.floor(Math.random() * 5 + 1));
-    } else if (time <= 0 && qtime) {
-      history.push("/q/" + current + "bonus=" + current);
-      setTime(5);
-      setRand(Math.floor(Math.random() * 5 + 1));
-      axios
-        .post("http://localhost:5000/wrong/" + rand)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err.message));
-      setqTime(false);
+      history.push(bonusUrl);
+      // history.push("/q/" + questionIndex + "bonus=" + questionIndex);
+      // history.push(
+      //   "/q/" + "bonus=" + questionIndex + "user=" + nextQuestionIndex
+      // );
     }
 
-    if (current === 0 && state < 1) {
-      let questions = shuffle(question).filter((e, i) => i < 10);
-      // window.localStorage.setItem("questions", JSON.stringify(questions));
-      // setQuestion(window.localStorage.getItem("questions"));
-      // console.log(state);
-    }
-    if (rand > 0 && state < 1) {
-      setTime(10);
-      setqTime(true);
-      setState(1);
-    }
+    // window.localStorage.setItem("questions", JSON.stringify(questions));
+    // setQuestion(window.localStorage.getItem("questions"));
+    // console.log(state);
 
     return () => {
       clearInterval(interval);
     };
-  }, [time, current, history, state, qtime, rand]);
+  }, [time, questionIndex, nextQuestionIndex, history, user, bonusUrl]);
 
   return (
     <>
-      {current < 9 ? (
-        <div className="question">
-          <div className="question-section">
-            <div
-              className="question-count"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignContent: "center",
-              }}>
-              <p>
-                <span>Question {current + 1}</span>
-              </p>
-              {/* <p>
+      {questionIndex < 9 ? (
+        <>
+          <div className="question">
+            <div className="question-section">
+              <div
+                className="question-count"
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignContent: "center",
+                }}>
+                <p>
+                  <span>Question {questionIndex + 1}</span>
+                </p>
+                {/* <p>
             <span>
               score
             </span>
             /{questions.length}
           </p> */}
-              <span>{time}</span>
+                <span>{time}</span>
+              </div>
+              <div className="question-text">
+                {questions[questionIndex].questionText.replace(
+                  /&#?\w+;/g,
+                  (match) => entities[match]
+                )}
+              </div>
             </div>
-            <div className="question-text">
-              {questions[current].questionText.replace(
-                /&#?\w+;/g,
-                (match) => entities[match]
-              )}
+            <div className="answer-section">
+              {questions[questionIndex].answerOption.map((e, i) => {
+                return (
+                  <button
+                    key={i}
+                    onClick={(e) => {
+                      handleClick(e, i);
+                    }}>
+                    {obj[i] +
+                      ". " +
+                      e.answerText.replace(
+                        /&#?\w+;/g,
+                        (match) => entities[match]
+                      )}
+                  </button>
+                );
+              })}
+              {/* <p>Contester {user} have the floor</p> */}
             </div>
           </div>
-          <div className="answer-section">
-            {questions[current].answerOption.map((e, i) => {
-              return (
-                <button
-                  key={i}
-                  onClick={(e) => {
-                    handleClick(e, i);
-                  }}>
-                  {obj[i] +
-                    ". " +
-                    e.answerText.replace(
-                      /&#?\w+;/g,
-                      (match) => entities[match]
-                    )}
-                </button>
-              );
-            })}
-            {/* <p>Contester {rand} have the floor</p> */}
-          </div>
-        </div>
+          <T />
+        </>
       ) : (
         history.push("/score")
       )}

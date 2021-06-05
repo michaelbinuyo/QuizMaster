@@ -1,3 +1,5 @@
 node_modules
 Backend/‘~/.npm-global
 # ‘~/
+Backend/.env
+.env

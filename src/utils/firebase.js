@@ -1,12 +1,12 @@
 import firebase from "firebase";
 var firebaseConfig = {
-  apiKey: "AIzaSyD7x64Rapwn9Mwm95zNOneO-qGJhhv_v28",
-  authDomain: "crown-db-5e563.firebaseapp.com",
-  projectId: "crown-db-5e563",
-  storageBucket: "crown-db-5e563.appspot.com",
-  messagingSenderId: "193981564849",
-  appId: "1:193981564849:web:dd009b7ea1c89a86f9df90",
-  measurementId: "G-5WHF6JKH3S",
+  apiKey: "AIzaSyAq8zT2NHzj33UVOuYBkO5PqM6P3kEQ7CM",
+  authDomain: "automatic-quiz-system.firebaseapp.com",
+  databaseURL: "https://automatic-quiz-system-default-rtdb.firebaseio.com",
+  projectId: "automatic-quiz-system",
+  storageBucket: "automatic-quiz-system.appspot.com",
+  messagingSenderId: "195466373196",
+  appId: "1:195466373196:web:13a06f82cbd7b7e7bd2ce9",
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

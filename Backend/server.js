@@ -4,9 +4,11 @@ const mongoose = require("mongoose");
 const connectDB = require("./db");
 const { findData, importData, deleteData, UpdateScores } = require("./seeder");
 const Question = require("./models");
+
 const Score = require("./contestantModel");
 const q = require("../src/Quiz.json");
-
+const questionRouter = require("./routes/Questionroutes");
+const userRouter = require("./routes/userRoute");
 require("dotenv").config();
 
 const app = express();
@@ -27,101 +29,81 @@ connectDB();
 // findData();
 // UpdateScores();
 //api res.json
-app.get("/", async (req, res) => {
-  try {
-    Question.find({}, (err, user) => {
-      res.json(user);
-    });
-  } catch (error) {
-    console.log(err.message);
-  }
-});
-//post the questions
-app.post("/", async (req, res) => {
-  // q = req.body.question;
-  try {
-    if (q) {
-      // res.json(q);
-      await Question.insertMany(q);
-      res.json("Question Sent to the database...");
-    } else res.json("Server Error");
-  } catch (error) {
-    console.log(error.message);
-  }
-});
-app.post("/user/:id", async (req, res) => {
-  // res.json("sent" + req.params.id);
-  const id = req.params.id;
-  try {
-    // Score.findOne({ id: id }, (err, question) => {
-    // });
-    const s = await Score.findOne({ id: id });
-    s.score = s.score + 5;
-    s.save();
-    res.json(s);
-    console.log(s);
-  } catch (error) {
-    console.log(err.message);
-  }
-});
-//Bonus Answer
-app.post("/bonus/:id", async (req, res) => {
-  // res.json("sent" + req.params.id);
-  const id = req.params.id;
-  try {
-    // Score.findOne({ id: id }, (err, question) => {
-    // });
-    const s = await Score.findOne({ id: id });
-    s.score = s.score + 2;
-    s.save();
-    res.json(s);
-    console.log(s);
-  } catch (error) {
-    console.log(err.message);
-  }
-});
-//Wrong answer
-app.post("/wrong/:id", async (req, res) => {
-  // res.json("sent" + req.params.id);
-  const id = req.params.id;
-  try {
-    // Score.findOne({ id: id }, (err, question) => {
-    // });
-    const s = await Score.findOne({ id: id });
-    s.score = s.score - 2;
-    s.save();
-    res.json(s);
-    console.log(s);
-  } catch (error) {
-    console.log(err.message);
-  }
-});
-//update all the scores to zero
-app.get("/delete_scores", async (req, res) => {
-  try {
-    Score.find({}, (err, scores) => {
-      scores.map(async (score) => {
-        const s = await Score.findOne({ id: score.id });
-        s.score = 0;
-        s.save();
-      });
-      res.json(scores);
-    });
-  } catch (error) {
-    console.log(err.message);
-  }
-});
-//get all the contestant
-app.get("/user", async (req, res) => {
-  // res.json("sent" + req.params.id);
-  try {
-    Score.find({}, (err, question) => {
-      res.json(question);
-    });
-  } catch (error) {
-    console.log(err.message);
-  }
-});
+app.use(questionRouter);
+app.use(userRouter);
+// app.post("/user/:id", async (req, res) => {
+//   // res.json("sent" + req.params.id);
+//   const id = req.params.id;
+//   try {
+//     // Score.findOne({ id: id }, (err, question) => {
+//     // });
+//     const s = await Score.findOne({ id: id });
+//     s.score = s.score + 5;
+//     s.save();
+//     res.json(s);
+//     console.log(s);
+//   } catch (error) {
+//     console.log(err.message);
+//   }
+// });
+// //Bonus Answer
+// app.post("/bonus/:id", async (req, res) => {
+//   // res.json("sent" + req.params.id);
+//   const id = req.params.id;
+//   try {
+//     // Score.findOne({ id: id }, (err, question) => {
+//     // });
+//     const s = await Score.findOne({ id: id });
+//     s.score = s.score + 2;
+//     s.save();
+//     res.json(s);
+//     console.log(s);
+//   } catch (error) {
+//     console.log(err.message);
+//   }
+// });
+// //Wrong answer
+// app.post("/wrong/:id", async (req, res) => {
+//   // res.json("sent" + req.params.id);
+//   const id = req.params.id;
+//   try {
+//     // Score.findOne({ id: id }, (err, question) => {
+//     // });
+//     const s = await Score.findOne({ id: id });
+//     s.score = s.score - 2;
+//     s.save();
+//     res.json(s);
+//     console.log(s);
+//   } catch (error) {
+//     console.log(err.message);
+//   }
+// });
+// //update all the scores to zero
+// app.get("/delete_scores", async (req, res) => {
+//   try {
+//     Score.find({}, (err, scores) => {
+//       scores.map(async (score) => {
+//         const s = await Score.findOne({ id: score.id });
+//         s.score = 0;
+//         s.save();
+//       });
+//       res.json(scores);
+//     });
+//   } catch (error) {
+//     console.log(err.message);
+//   }
+// });
+// //get all the contestant
+// app.get("/user", async (req, res) => {
+//   // res.json("sent" + req.params.id);
+//   try {
+//     Score.find({}, (err, question) => {
+//       res.json(question);
+//     });
+//   } catch (error) {
+//     console.log(err.message);
+//   }
+// });
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
