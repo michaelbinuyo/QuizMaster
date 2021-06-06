@@ -5,9 +5,12 @@ import { Button } from "react-bootstrap";
 import firebase from "../utils/firebase";
 import Confirmation from "./confimation";
 import FormRow from "./formRow";
+import axios from "axios";
+import { questionApi } from "../utils/stringConstants";
 export const Forms = ({ match }) => {
   const id = match.params.id;
   const [questions, setQuestions] = useState({});
+  console.log("OK");
   // const q = 10;
   // const ref = useRef();
   // const ref1 = useRef();
@@ -32,15 +35,21 @@ export const Forms = ({ match }) => {
     };
     createRef.update(create);
   };
+  const handleSubmit = async (questions) => {
+    try {
+      const { data } = axios.post(questionApi, { questions: questions });
+    } catch (err) {}
+  };
   return (
     <FormElement
       onSubmit={(e) => {
         e.preventDefault();
 
-        console.log("Submit", questions);
+        console.log("Submit");
         // createQuestions();
         // setSubmit(true);
         // }
+        handleSubmit(Object.values(questions));
       }}
       className="admin">
       {!submit ? (

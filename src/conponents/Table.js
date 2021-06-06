@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
-import users from "../contestant.json";
 import axios from "axios";
 const T = () => {
-  const getData = async () => {};
-  const [data, setData] = useState([]);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
-    // setData(getData());
+    // setUser(getData());
     axios
       .get("http://localhost:5000/user")
-      .then((res) => setData(res.data))
+      .then((res) => setUser(res.data))
       .catch((err) => console.log(err.message));
   });
   return (
@@ -23,7 +21,7 @@ const T = () => {
         </tr>
       </thead>
       <tbody>
-        {data.map((e, i) => (
+        {user.map((e, i) => (
           <tr key={i}>
             <td>{i + 1}</td>
             <td>{e.name}</td>

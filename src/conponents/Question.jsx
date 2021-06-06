@@ -29,14 +29,11 @@ const Question = ({ questions }) => {
       setTimeout(() => {
         // history.push("/q/" + nextQuestionIndex);
         ele.remove("correct");
-        // window.location.href = "http://localhost:3000/q/" + nextQuestionIndex;
+
         history.push("/q/" + nextQuestionIndex);
         setTime(10);
       }, 500);
     } else {
-      // window.location.href =
-      //   "http://localhost:3000/q/" + questionIndex + `?bonus=${questionIndex}`;
-
       axios
         .post("http://localhost:5000/wrong/" + user)
         .then(() => history.push(bonusUrl))
@@ -54,25 +51,16 @@ const Question = ({ questions }) => {
   const obj = ["A", "B", "C", "D"];
   const [time, setTime] = useState(10);
   const nextQuestionIndex = questionIndex + 1;
-  // localhost:3000/q/bonus/0=user1
-  // http: console.log(bonusUrl);
+
   useEffect(() => {
     const interval = setInterval(() => {
       const newTime = time - 1;
       setTime(newTime);
-    }, 5000000);
+    }, 500);
     if (time <= 0) {
       clearInterval(interval);
       history.push(bonusUrl);
-      // history.push("/q/" + questionIndex + "bonus=" + questionIndex);
-      // history.push(
-      //   "/q/" + "bonus=" + questionIndex + "user=" + nextQuestionIndex
-      // );
     }
-
-    // window.localStorage.setItem("questions", JSON.stringify(questions));
-    // setQuestion(window.localStorage.getItem("questions"));
-    // console.log(state);
 
     return () => {
       clearInterval(interval);

@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
 var firebaseConfig = {
   apiKey: "AIzaSyAq8zT2NHzj33UVOuYBkO5PqM6P3kEQ7CM",
   authDomain: "automatic-quiz-system.firebaseapp.com",

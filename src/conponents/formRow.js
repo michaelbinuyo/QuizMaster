@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 function FormRow({ index, setQuestions, refs, r }) {
-  const [question, setQuestion] = useState({});
   const ref = useRef([]);
   ref.current = [0, 0, 0, 0, 0, 0].map((_, i) => React.createRef());
   // ref.map((e) => console.log(e));
@@ -60,8 +59,10 @@ function FormRow({ index, setQuestions, refs, r }) {
               <option value="" disabled selected>
                 Pick Answer
               </option>
-              {optionConstants.map((e) => (
-                <option value={e}>{e}</option>
+              {optionConstants.map((e, i) => (
+                <option key={i} value={e}>
+                  {e}
+                </option>
               ))}
             </select>
           </div>

@@ -24,7 +24,7 @@ const Admin = ({ history }) => {
           placeholder="0"
           onChange={(e) => setNumber(Number(e.target.value))}
         />
-        <Button onClick={() => history.push("/admin/question/" + number)}>
+        <Button onClick={() => history.push("/admin/questions/" + number)}>
           Submit
         </Button>
       </div>
