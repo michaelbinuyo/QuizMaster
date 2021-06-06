@@ -8,23 +8,23 @@ import { Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { Forms } from "./conponents/F";
 import BonusQuestion from "./conponents/BonusQuestion";
-import firebase from "./utils/firebase";
 import axios from "axios";
 import { questionApi, userApi } from "./utils/stringConstants";
 
 export default function App() {
   // const [questions, setQuestion] = useState([]);
-  var starCountRef = firebase
-    .database()
-    .ref("automatic-quiz-system-default-rtdb")
-    .on("value", (snapshot) => {
-      let chats = [];
+  // var starCountRef = firebase
+  //   .database()
+  //   .ref("automatic-quiz-system-default-rtdb")
+  //   .on("value", (snapshot) => {
+  //     let chats = [];
 
-      snapshot.forEach((snap) => {
-        chats.push(snap.val());
-      });
-      console.log(snapshot.val());
-    });
+  //     snapshot.forEach((snap) => {
+  //       chats.push(snap.val());
+  //     });
+  //     console.log(snapshot.val());
+  //   });
+
   const [questions, setQuestions] = useState([]);
   const [score, setScore] = useState(0);
   useEffect(() => {
