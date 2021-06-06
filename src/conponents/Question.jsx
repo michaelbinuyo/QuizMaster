@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import axios from "axios";
 import T from "./Table";
+import { intervalLimit } from "../utils/stringConstants";
 const Question = ({ questions }) => {
   const user = 2;
   const history = useHistory();
@@ -51,21 +52,22 @@ const Question = ({ questions }) => {
   const obj = ["A", "B", "C", "D"];
   const [time, setTime] = useState(10);
   const nextQuestionIndex = questionIndex + 1;
-
+  const nextQuestionUrl = "/q/" + nextQuestionIndex;
   useEffect(() => {
     const interval = setInterval(() => {
       const newTime = time - 1;
       setTime(newTime);
-    }, 500);
+    }, intervalLimit);
     if (time <= 0) {
       clearInterval(interval);
-      history.push(bonusUrl);
+      setTime(10);
+      history.push(nextQuestionUrl);
     }
 
     return () => {
       clearInterval(interval);
     };
-  }, [time, questionIndex, nextQuestionIndex, history, user, bonusUrl]);
+  }, [time, questionIndex, nextQuestionIndex, history, user, nextQuestionUrl]);
 
   return (
     <>

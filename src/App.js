@@ -14,11 +14,16 @@ import { questionApi, userApi } from "./utils/stringConstants";
 
 export default function App() {
   // const [questions, setQuestion] = useState([]);
-  // var starCountRef = firebase.database().ref("posts/" + postId + "/starCount");
-  // starCountRef.on("value", (snapshot) => {
-  //   const data = snapshot.val();
-  //   updateStarCount(postElement, data);
-  // });
+  var starCountRef = firebase
+    .database()
+    .ref("automatic-quiz-system-default-rtdb")
+    .on("value", (snapshot) => {
+      let chats = [];
+      console.log("from database");
+      snapshot.forEach((snap) => {
+        chats.push(snap.val());
+      });
+    });
   const [questions, setQuestions] = useState([]);
   const [score, setScore] = useState(0);
   useEffect(() => {

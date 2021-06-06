@@ -38,6 +38,7 @@ export const Forms = ({ match }) => {
   const handleSubmit = async (questions) => {
     try {
       const { data } = axios.post(questionApi, { questions: questions });
+      console.log(data);
     } catch (err) {}
   };
   return (

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "react-router";
+import { intervalLimit } from "../utils/stringConstants";
 import T from "./Table";
 
 class BonusQuestion extends Component {
@@ -57,7 +58,7 @@ class BonusQuestion extends Component {
           time: time - 1,
         }));
       }
-    }, 1000);
+    }, intervalLimit);
   }
 
   componentWillUnmount() {
