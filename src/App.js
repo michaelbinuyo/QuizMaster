@@ -19,10 +19,11 @@ export default function App() {
     .ref("automatic-quiz-system-default-rtdb")
     .on("value", (snapshot) => {
       let chats = [];
-      console.log("from database");
+
       snapshot.forEach((snap) => {
         chats.push(snap.val());
       });
+      console.log(snapshot.val());
     });
   const [questions, setQuestions] = useState([]);
   const [score, setScore] = useState(0);
