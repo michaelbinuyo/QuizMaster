@@ -2,19 +2,23 @@ import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { intervalLimit } from "../utils/stringConstants";
-import T from "./Table";
+import firebase from "../utils/firebase";
 
+import T from "./Table";
+// import questions from "../Quiz.json";
 class BonusQuestion extends Component {
   constructor(props) {
     super(props);
     this.questions = props.questions;
     let [questionIndex, user] = this.props.match.params.id.split("=");
-    this.user = user.slice(4);
+    this.user = Number(user.slice(5));
     this.questionIndex = parseInt(questionIndex);
-
+    this.question = props.questions[questionIndex];
     this.nextQuestionIndex = this.questionIndex + 1;
+    this.nextQuestionUrl = "/q/" + this.nextQuestionIndex;
+
     this.history = this.props.history;
-    console.log(this.questionIndex, this.user);
+    console.log(this.questionIndex, "last user is", this.user);
 
     this.handleClick = (e, index) => {
       const { questionIndex, questions, nextQuestionIndex, history } = this;
@@ -33,14 +37,6 @@ class BonusQuestion extends Component {
           // setRand(Math.floor(Math.random() * 5 + 1));
         }, 500);
       } else {
-        // history.push("/q/" + questionIndex + "bonus=" + questionIndex);
-        // setTime(5);
-        // setRand(Math.floor(Math.random() * 5 + 1));
-        //   axios
-        //     .post("http://localhost:5000/wrong/" + rand)
-        //     .then((res) => console.log(res))
-        //     .catch((err) => console.log(err.message));
-        //
       }
       console.log(answer, nextQuestionIndex);
     };
@@ -52,6 +48,7 @@ class BonusQuestion extends Component {
 
   componentDidMount() {
     const { time } = this.state;
+    const { history } = this.props;
     this.myInterval = setInterval(() => {
       if (time > 0) {
         this.setState(({ time }) => ({
@@ -59,6 +56,37 @@ class BonusQuestion extends Component {
         }));
       }
     }, intervalLimit);
+    firebase
+      .database()
+      .ref()
+      .on("value", (snapshot) => {
+        Object.values(
+          Object.values(
+            snapshot.forEach((snap, i) => {
+              const option = snap.val();
+              for (let i in option) {
+                if (option[i] !== "no ans") {
+                  const obj = { A: 0, B: 1, C: 2, D: 3 };
+
+                  const answerIndex = obj[option[i][0]];
+                  const picked =
+                    this.question.answerOption[answerIndex].answerText;
+                  const correctAnswer = this.question.correct;
+                  console.log(answerIndex, correctAnswer, picked);
+                  if (picked === correctAnswer) {
+                    history.push(this.nextQuestionUrl);
+                    clearInterval(this.myInterval);
+                  }
+
+                  clearInterval(this.myInterval);
+
+                  history.push(this.nextQuestionUrl);
+                }
+              }
+            })
+          )
+        );
+      });
   }
 
   componentWillUnmount() {
@@ -77,13 +105,7 @@ class BonusQuestion extends Component {
     };
     const { history } = this.props;
     const { time } = this.state;
-    console.log(time);
-    const {
-      questionIndex,
-      questions,
-
-      handleClick,
-    } = this;
+    const { questionIndex, questions } = this;
 
     if (time <= 0) {
       clearInterval(this.myInterval);
@@ -121,11 +143,7 @@ class BonusQuestion extends Component {
           <div className="answer-section">
             {questions[questionIndex].answerOption.map((e, i) => {
               return (
-                <button
-                  key={i}
-                  onClick={(e) => {
-                    handleClick(e, i);
-                  }}>
+                <button key={i}>
                   {obj[i] +
                     ". " +
                     e.answerText.replace(

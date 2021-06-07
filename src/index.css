@@ -136,6 +136,9 @@ a {
 .correct {
   background-color: var(--success) !important;
 }
+.wrong {
+  background-color: var(--danger) !important;
+}
 
 .btn {
   display: flex;
@@ -171,6 +174,8 @@ table {
 :root {
   --primary: #4059ad;
   --table: #555e7d80;
+  --success: green;
+  --danger: red;
 }
 .start {
   display: flex;

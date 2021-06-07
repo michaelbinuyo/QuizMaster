@@ -8,5 +8,5 @@ export const userApi = questionApi + "user";
 // @get to remove score
 // @put to give score
 // user/:id
-export const userScoreApi = userApi;
+export const userScoreApi = userApi + "/";
 export const intervalLimit = 5000;

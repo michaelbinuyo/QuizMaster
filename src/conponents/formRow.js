@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 function FormRow({ index, setQuestions, refs, r }) {
   const ref = useRef([]);
   ref.current = [0, 0, 0, 0, 0, 0].map((_, i) => React.createRef());
+  var values = ref.current.map((e) => e.value);
   // ref.map((e) => console.log(e));
   const handleChange = (e, i) => {
     var keys = [
@@ -13,7 +14,6 @@ function FormRow({ index, setQuestions, refs, r }) {
       "option4",
       "correct",
     ];
-    var values = ref.current.map((e) => e.value);
     var result = {};
     keys.forEach((key, i) => (result[key] = values[i]));
     refs.current = result;

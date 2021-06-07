@@ -11,10 +11,10 @@ const increaseScore = asyncHandler(async (req, res) => {
     const s = await Score.findOne({ id: id });
     s.score = s.score + 5;
     s.save();
-    res.json(score);
+    res.json(s);
     console.log(s);
   } catch (error) {
-    console.log(err.message);
+    console.log(error.message);
   }
 });
 const reduceScore = asyncHandler(async (req, res) => {

@@ -27,6 +27,7 @@ export default function App() {
 
   const [questions, setQuestions] = useState([]);
   const [score, setScore] = useState(0);
+  const [stamp, setStamp] = useState("");
   useEffect(() => {
     console.log("from app.js");
     if (questions.length <= 0) {
@@ -53,6 +54,8 @@ export default function App() {
             questions={questions}
             setScore={setScore}
             score={score}
+            stamp={stamp}
+            setStamp={setStamp}
           />
         </Route>
         <Route path="/" exact component={Home} />
