@@ -99,11 +99,11 @@ body {
   border-radius: 15px;
   text-align: center;
 }
-.timer-text:hover {
-  background: rgb(230, 153, 12);
-} */
 
 /* ANSWERS/RIGHT SECTION */
+.pick {
+  background: rgb(230, 153, 12);
+}
 .answer-section {
   width: 100%;
   display: grid;

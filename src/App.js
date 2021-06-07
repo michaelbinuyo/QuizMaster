@@ -52,8 +52,7 @@ export default function App() {
           <Question
             className="questions"
             questions={questions}
-            setScore={setScore}
-            score={score}
+            setQuestions={setQuestions}
             stamp={stamp}
             setStamp={setStamp}
           />
