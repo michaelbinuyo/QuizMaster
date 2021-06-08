@@ -3,9 +3,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 const connectDB = async () => {
   const localUrl =
-    // "mongodb+srv://emanuelone:85740014@cluster0.ogcs0.gcp.mongodb.net/projectLast?retryWrites=true&w=majority";
+    "mongodb+srv://emanuelone:85740014@cluster0.ogcs0.gcp.mongodb.net/projectLast?retryWrites=true&w=majority";
     //change URL for atlas
-    "mongodb://127.0.0.1:27017/projectLast";
+    // "mongodb://127.0.0.1:27017/projectLast";
   const atlasUrl = process.env.MONGO_URL;
 
   try {
