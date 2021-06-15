@@ -13,8 +13,20 @@ function mutateArr(question) {
     });
     let correct = answerOption[obj[e.correct]].answerText;
     return JSON.stringify({ questionText, answerOption, correct });
-  });
+  });user
 
   return arr;
 }
 module.exports = mutateArr;
+
+// const questions = require("./Quiz_Bank.json");
+// const cleaned = [];
+// const q = questions.map((question) => {
+//   if (cleaned)
+//     cleaned.map((qu) => {
+//       if (qu.questionText != question.questionText) cleaned.push(question);
+//     });
+//   // else
+//   // cleaned.push(question);
+//   console.log(questions.length, cleaned.length);
+// });

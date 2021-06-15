@@ -15,16 +15,24 @@ const Admin = ({ history }) => {
           justifyContent: "center",
           flexDirection: "column",
           rowGap: "2rem",
-        }}>
+        }}
+      >
         <p>Enter Number of Questions</p>
         <input
           type="number"
           ref={ref}
           value={number ? number : ""}
           placeholder="0"
+          onKeyPress={(e) => {
+            const value = e.target.value;
+            if (e.key === "Enter" && value)
+              history.push("/admin/questions/" + value);
+          }}
           onChange={(e) => setNumber(Number(e.target.value))}
         />
-        <Button onClick={() => history.push("/admin/questions/" + number)}>
+        <Button
+          onClick={() => number && history.push("/admin/questions/" + number)}
+        >
           Submit
         </Button>
       </div>

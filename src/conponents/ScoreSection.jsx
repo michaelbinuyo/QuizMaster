@@ -9,13 +9,14 @@ const ScoreSection = () => {
           onClick={() => {
             setClicked(true);
           }}
-          className="score-section">
+          className="score-section"
+        >
           <p style={{ textAlign: "center", width: "100%", cursor: "pointer" }}>
             End Quiz
           </p>
         </div>
       ) : (
-        <Table></Table>
+        <Table />
       )}
     </>
   );

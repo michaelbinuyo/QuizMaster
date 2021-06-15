@@ -10,36 +10,21 @@ import { Forms } from "./conponents/F";
 import BonusQuestion from "./conponents/BonusQuestion";
 import axios from "axios";
 import { questionApi, userApi } from "./utils/stringConstants";
-
 export default function App() {
-  // const [questions, setQuestion] = useState([]);
-  // var starCountRef = firebase
-  //   .database()
-  //   .ref("automatic-quiz-system-default-rtdb")
-  //   .on("value", (snapshot) => {
-  //     let chats = [];
-
-  //     snapshot.forEach((snap) => {
-  //       chats.push(snap.val());
-  //     });
-  //     console.log(snapshot.val());
-  //   });
-
   const [questions, setQuestions] = useState([]);
   const [score, setScore] = useState(0);
   const [stamp, setStamp] = useState("");
   useEffect(() => {
-    console.log("from app.js");
     if (questions.length <= 0) {
       axios
         .get(questionApi)
         .then((res) => setQuestions(res.data))
         .catch((err) => console.log(err.message));
-      axios
-        .get(userApi)
-        .then((res) => console.log("Database Cleaned!!"))
-        .catch((err) => console.log(err.message));
     }
+    console.log(
+      "from app.js",
+      questions.map((q) => q.correct)
+    );
   });
   return (
     <div className="app">
@@ -57,7 +42,9 @@ export default function App() {
             setStamp={setStamp}
           />
         </Route>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact>
+          <Home questions={questions} />
+        </Route>
 
         <Route path="/admin/questions/:id" component={Forms} />
         <Route path="/admin" exact component={Admin} />

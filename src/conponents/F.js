@@ -45,12 +45,12 @@ export const Forms = ({ match }) => {
     <FormElement
       onSubmit={(e) => {
         e.preventDefault();
-
-        console.log("Submit");
+const q = Object.values(questions);
+        console.log("Submit",q);
         // createQuestions();
         // setSubmit(true);
         // }
-        handleSubmit(Object.values(questions));
+        handleSubmit(q);
       }}
       className="admin">
       {!submit ? (

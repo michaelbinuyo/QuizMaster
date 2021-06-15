@@ -15,19 +15,33 @@ const getQuestions = asyncHandler(async (req, res) => {
   }
 });
 const postQuestions = asyncHandler(async (req, res) => {
-  const q = req.body.questions;
+  const q = req.body;
+  console.log(q, "from server");
   try {
     if (q) {
-      // res.json(q);
+      res.json(q);
       // console.log(q);
-      const questions = mutateArr(q);
-      console.log(questions);
-      // let s = await Question.insertMany(questions);
-      // s.save();
+      // const questions = mutateArr(q);
+      // await Question.insertMany(q);
+
       res.json("Question Sent to the database...");
     } else res.json("Server Error");
   } catch (error) {
     console.log(error.message);
   }
 });
-module.exports = { postQuestions, getQuestions };
+const deleteQuestion = asyncHandler(async (req, res) => {
+  try {
+    // await Question
+
+    await Question.deleteMany({}, () => {});
+    console.log("Question Deleted!!");
+    // console.log();
+    // process.exit();
+    res.json("Question Deleted");
+  } catch (err) {
+    console.log(err.message);
+    process.exit(1);
+  }
+});
+module.exports = { postQuestions, getQuestions, deleteQuestion };

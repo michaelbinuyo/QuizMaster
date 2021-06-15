@@ -18,6 +18,7 @@ const importData = async (arr) => {
     // process.exit(1);
   }
 };
+
 const deleteData = async () => {
   try {
     // await Question

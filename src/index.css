@@ -35,7 +35,7 @@ body {
 .app .question {
   width: 600px;
   margin-top: 1rem;
-  padding: 3rem 1.5rem;
+  padding: 1.5rem;
   margin-bottom: 1rem;
 }
 .question,
@@ -101,8 +101,16 @@ body {
 }
 
 /* ANSWERS/RIGHT SECTION */
+.click {
+  grid-column: span 2;
+}
+.click > .btn {
+  margin: auto;
+  width: fit-content;
+  padding: 0.4rem 4rem;
+}
 .pick {
-  background: rgb(230, 153, 12);
+  background-color: rgb(230, 153, 12) !important;
 }
 .answer-section {
   width: 100%;

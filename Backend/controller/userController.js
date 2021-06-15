@@ -12,7 +12,7 @@ const increaseScore = asyncHandler(async (req, res) => {
     s.score = s.score + 5;
     s.save();
     res.json(s);
-    console.log(s);
+    // console.log(s);
   } catch (error) {
     console.log(error.message);
   }
@@ -27,7 +27,7 @@ const reduceScore = asyncHandler(async (req, res) => {
     s.score = s.score - 2;
     s.save();
     res.json(s);
-    console.log(s);
+    // console.log(s);
   } catch (err) {
     console.log(err.message);
   }
@@ -55,7 +55,7 @@ const deleteAllScore = asyncHandler(async (req, res) => {
         s.score = 0;
         s.save();
       });
-      res.json(scores);
+      res.json("Delete All Score");
     });
   } catch (err) {
     console.log(err.message);

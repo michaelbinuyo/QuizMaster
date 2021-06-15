@@ -10,6 +10,6 @@ const {
 } = require("../controller/userController");
 
 const router = express.Router();
-router.route("/user").get(getAllData).post(deleteAllScore);
+router.route("/user").get(getAllData).delete(deleteAllScore);
 router.route("/user/:id").post(increaseScore).get(reduceScore).put(bonusScore);
 module.exports = router;

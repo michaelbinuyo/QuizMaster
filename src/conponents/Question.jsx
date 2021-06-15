@@ -22,77 +22,65 @@ const Question = ({ questions, setQuestions }) => {
   const ref = useRef([]);
   ref.current = [0, 0, 0, 0].map((_, i) => React.createRef());
   // var values = ref.current.map((e) => e.value);
-  const [state, setState] = useState(10);
+  const [answered, setAnswered] = useState(0);
   const obj = ["A", "B", "C", "D"];
   const [time, setTime] = useState(15);
   const nextQuestionIndex = questionIndex + 1;
   const nextQuestionUrl = "/q/" + nextQuestionIndex;
+  // eslint-disable-next-line
   const [question, setQuestion] = useState(questions[0]);
-  const [user, setUser] = useState(0);
-
-  let answer = "";
-  const handleClick = () => {
+  const [user, setUser] = useState({});
+  // user={ans:"A1",isCorrect:true}
+  useEffect(() => {
+    setQuestion(questions[0]);
     setTime(15);
+    setAnswered((p) => p + 1);
+  }, [questions]);
+  const handleClick = () => {
     // questions.shift();
     // history.push("/q/" + Number(questionIndex + 1));
+    const { ans, isCorrect } = user;
     const obj = { A: 0, B: 1, C: 2, D: 3 };
+    const contestant = ans[1];
+    const answerIndex = obj[ans[0]];
 
-    const contestant = user.ans[1];
-    const answerIndex = obj[user.ans[0]];
-    const { isCorrect } = user;
+    //check correct in Dom
     ref.current.map((e, i) => {
-      if (i === answerIndex) {
-        e.classList.add("pick");
-      }
+      e.classList.remove("pick");
+      e.classList.remove("correct");
+      e.classList.remove("wrong");
+
+      if (i === answerIndex && isCorrect) {
+        e.classList.add("correct");
+      } else if (i === answerIndex) e.classList.add("wrong");
+      return null;
     });
     setTimeout(() => {
       if (isCorrect) {
-        ref.current.map((e, i) => {
-          if (i === answerIndex) {
-            e.classList.remove("pick");
+        axios
+          .post(userScoreApi + contestant)
+          .then((res) => {
+            setQuestions((questions) =>
+              questions.filter((_, index) => index > 0)
+            );
+            ref.current.map((e) => e.classList.remove("correct"));
+          })
 
-            e.classList.add("correct");
-          }
-        });
+          .catch((err) => console.log(err.message));
       } else {
-        ref.current.map((e, i) => {
-          if (i === answerIndex) {
-            e.classList.remove("pick");
-
-            e.classList.add("wrong");
-          }
-        });
+        axios
+          .get(userScoreApi + contestant)
+          .then((res) => {
+            setQuestions((questions) =>
+              questions.filter((_, index) => index > 0)
+            );
+            ref.current.map((e) => e.classList.remove("wrong"));
+          })
+          .catch((err) => console.log(err.message));
       }
-    }, 2000);
-    setTimeout(() => {
-      console.log(contestant, isCorrect);
-      if (isCorrect)
-        axios.post(userScoreApi + contestant).then((res) => {
-          ref.current.map((e, i) => {
-            if (i === answerIndex) {
-              e.classList.remove("wrong");
-              e.classList.remove("correct");
-            }
-          });
-
-          setQuestions(questions.filter((e, i) => i > 0));
-
-          history.push(nextQuestionUrl);
-        });
-      else
-        axios.get(userScoreApi + contestant).then((res) => {
-          ref.current.map((e, i) => {
-            if (i === answerIndex) {
-              e.classList.remove("correct");
-              e.classList.remove("wrong");
-            }
-          });
-          setQuestions(questions.filter((e, i) => i > 0));
-
-          history.push(nextQuestionUrl);
-        });
-    }, 5000);
+    }, 1000);
   };
+  // const answer = "";
   firebase
     .database()
     .ref()
@@ -102,7 +90,7 @@ const Question = ({ questions, setQuestions }) => {
           snapshot.forEach((snap, i) => {
             const option = snap.val();
             for (let i in option) {
-              if (option[i] !== "no ans" && !user) {
+              if (option[i] !== "no ans" && !Object.keys(user)) {
                 const obj = { A: 0, B: 1, C: 2, D: 3 };
 
                 const answerIndex = obj[option[i][0]];
@@ -112,7 +100,7 @@ const Question = ({ questions, setQuestions }) => {
 
                 setUser({ ans: option[i], isCorrect: isCorrect });
                 console.log(option[i], correctAnswer, picked, user);
-                answer = option[i];
+                // answer = option[i];
               }
             }
           })
@@ -121,8 +109,9 @@ const Question = ({ questions, setQuestions }) => {
       // console.log(user);
     });
 
+  //timer effect
   useEffect(() => {
-    console.log(questions);
+    // console.log(question);
 
     const interval = setInterval(() => {
       const newTime = time - 1;
@@ -137,12 +126,33 @@ const Question = ({ questions, setQuestions }) => {
     return () => {
       clearInterval(interval);
     };
-  }, [time, questions]);
+  }, [time]);
   // const ref = useRef();
+  const handleOption = (index) => {
+    // const text=
+    // const element = ref.current[index];
+    const picked = question.answerOption[index];
+    const obj = { A: 0, B: 1, C: 2, D: 3 };
+    const option = Object.keys(obj).find((key) => obj[key] === index);
+    const { answerText, isCorrect } = picked;
+    console.log(answerText, isCorrect, option);
+    setUser({ ans: option + "1", isCorrect });
 
+    ref.current.map((e, i) => {
+      e.classList.remove("pick");
+      e.classList.remove("correct");
+      e.classList.remove("wrong");
+
+      if (i === index) {
+        e.classList.add("pick");
+      }
+      return null;
+    });
+  };
+  const questionLength = questions.length + answered - 1;
   return (
     <>
-      {questions.length > 0 && nextQuestionIndex < 5 ? (
+      {questions.length > 0 ? (
         <>
           <div className="question">
             <div className="question-section">
@@ -152,9 +162,12 @@ const Question = ({ questions, setQuestions }) => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignContent: "center",
-                }}>
+                }}
+              >
                 <p>
-                  <span>Question {questionIndex + 1}</span>
+                  <span>
+                    Question {answered}/{questionLength}
+                  </span>
                 </p>
 
                 <span>{time}</span>
@@ -167,9 +180,13 @@ const Question = ({ questions, setQuestions }) => {
               </div>
             </div>
             <div className="answer-section">
-              {questions[questionIndex].answerOption.map((e, i) => {
+              {question.answerOption.map((e, i) => {
                 return (
-                  <button key={i} ref={(el) => (ref.current[i] = el)}>
+                  <button
+                    key={i}
+                    ref={(el) => (ref.current[i] = el)}
+                    onClick={() => handleOption(i)}
+                  >
                     {obj[i] +
                       ". " +
                       e.answerText.replace(
@@ -180,7 +197,11 @@ const Question = ({ questions, setQuestions }) => {
                 );
               })}
               {/* <p>Contester {user} have the floor</p> */}
-              <button onClick={handleClick}>Next</button>
+              <div className="click">
+                <button className="btn" onClick={handleClick}>
+                  Next
+                </button>
+              </div>
             </div>
           </div>
           <T />

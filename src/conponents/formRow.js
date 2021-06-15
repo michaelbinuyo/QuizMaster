@@ -5,7 +5,7 @@ function FormRow({ index, setQuestions, refs, r }) {
   ref.current = [0, 0, 0, 0, 0, 0].map((_, i) => React.createRef());
   var values = ref.current.map((e) => e.value);
   // ref.map((e) => console.log(e));
-  const handleChange = (e, i) => {
+  const handleChange = (e, index) => {
     var keys = [
       "questionText",
       "option1",
@@ -14,14 +14,18 @@ function FormRow({ index, setQuestions, refs, r }) {
       "option4",
       "correct",
     ];
+    index = index + 1;
+    const { name, value } = ref.current[index];
+    console.log(name, value);
+    // console.log(ref);
     var result = {};
-    keys.forEach((key, i) => (result[key] = values[i]));
-    refs.current = result;
-    console.log(refs);
-    const { name, value } = e.target;
-    // setQuestion((pre) => ({ ...pre, [name]: value }));
-    setQuestions((p) => ({ ...p, [index]: refs.current }));
-    console.log(name, value, index, refs.current);
+    keys.forEach((key, i) => (result[key] = values[index]));
+    // refs.current = result;
+    // console.log(refs);
+    // const { name, value } = e.target;
+    // // setQuestion((pre) => ({ ...pre, [name]: value }));
+    // // setQuestions((p) => ({ ...p, [index]: refs.current }));
+    // console.log(name, value, index, refs.current);
   };
   const optionConstants = ["A", "B", "C", "D"];
 
@@ -30,9 +34,9 @@ function FormRow({ index, setQuestions, refs, r }) {
       {
         <>
           <div className="qu">
-            <label htmlFor="question">Question {index + 1}</label>
+            <label htmlFor="questionText">Question {index + 1}</label>
             <textarea
-              name="question"
+              name="questionText"
               ref={(el) => (ref.current[0] = el)}
               onChange={(e) => handleChange(e, -1)}
             />{" "}
@@ -42,7 +46,7 @@ function FormRow({ index, setQuestions, refs, r }) {
               <div className="option" key={i}>
                 <label htmlFor="">Option {e}</label>
                 <textarea
-                  name="option1"
+                  name={"answerText" + (i + 1)}
                   ref={(el) => (ref.current[i + 1] = el)}
                   onChange={(e) => handleChange(e, i)}
                 />{" "}
@@ -53,14 +57,15 @@ function FormRow({ index, setQuestions, refs, r }) {
             <label htmlFor="">Correct Answer</label>
 
             <select
-              name="answerText"
-              onChange={(e) => handleChange(e, 5)}
-              ref={(el) => (ref.current[5] = el)}>
+              name="correct"
+              onChange={(e) => handleChange(e, 4)}
+              ref={(el) => (ref.current[5] = el)}
+            >
               <option value="" disabled selected>
                 Pick Answer
               </option>
               {optionConstants.map((e, i) => (
-                <option key={i} value={e}>
+                <option name={e} key={i} value={e}>
                   {e}
                 </option>
               ))}
