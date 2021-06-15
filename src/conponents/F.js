@@ -45,14 +45,15 @@ export const Forms = ({ match }) => {
     <FormElement
       onSubmit={(e) => {
         e.preventDefault();
-const q = Object.values(questions);
-        console.log("Submit",q);
+        const q = Object.values(questions);
+        console.log("Submit", q);
         // createQuestions();
-        // setSubmit(true);
+        setSubmit(true);
         // }
         handleSubmit(q);
       }}
-      className="admin">
+      className="admin"
+    >
       {!submit ? (
         <>
           {filledArray.map((e, i) => (

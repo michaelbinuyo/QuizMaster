@@ -34,78 +34,92 @@ const Question = ({ questions, setQuestions }) => {
   useEffect(() => {
     setQuestion(questions[0]);
     setTime(15);
-    setAnswered((p) => p + 1);
-  }, [questions]);
+    console.log(user);
+  }, [questions, user]);
   const handleClick = () => {
-    // questions.shift();
-    // history.push("/q/" + Number(questionIndex + 1));
-    const { ans, isCorrect } = user;
-    const obj = { A: 0, B: 1, C: 2, D: 3 };
-    const contestant = ans[1];
-    const answerIndex = obj[ans[0]];
+    //check user
+    if (Object.keys(user).length > 0) {
+      const { ans, isCorrect } = user;
+      const obj = { A: 0, B: 1, C: 2, D: 3 };
+      const contestant = ans[1];
+      const answerIndex = obj[ans[0]];
 
-    //check correct in Dom
-    ref.current.map((e, i) => {
-      e.classList.remove("pick");
-      e.classList.remove("correct");
-      e.classList.remove("wrong");
+      //check correct in Dom
+      ref.current.map((e, i) => {
+        e.classList.remove("pick");
+        e.classList.remove("correct");
+        e.classList.remove("wrong");
 
-      if (i === answerIndex && isCorrect) {
-        e.classList.add("correct");
-      } else if (i === answerIndex) e.classList.add("wrong");
-      return null;
-    });
-    setTimeout(() => {
-      if (isCorrect) {
-        axios
-          .post(userScoreApi + contestant)
-          .then((res) => {
-            setQuestions((questions) =>
-              questions.filter((_, index) => index > 0)
-            );
-            ref.current.map((e) => e.classList.remove("correct"));
-          })
+        if (i === answerIndex && isCorrect) {
+          e.classList.add("correct");
+        } else if (i === answerIndex) e.classList.add("wrong");
+        return null;
+      });
+      setTimeout(() => {
+        if (isCorrect) {
+          axios
+            .post(userScoreApi + contestant)
+            .then((res) => {
+              setQuestions((questions) =>
+                questions.filter((_, index) => index > 0)
+              );
+              ref.current.map((e) => e.classList.remove("correct"));
+              userLength = 0;
+              setUser({});
+              setAnswered((p) => p + 1);
+            })
 
-          .catch((err) => console.log(err.message));
-      } else {
-        axios
-          .get(userScoreApi + contestant)
-          .then((res) => {
-            setQuestions((questions) =>
-              questions.filter((_, index) => index > 0)
-            );
-            ref.current.map((e) => e.classList.remove("wrong"));
-          })
-          .catch((err) => console.log(err.message));
-      }
-    }, 1000);
+            .catch((err) => console.log(err.message));
+        } else {
+          axios
+            .get(userScoreApi + contestant)
+            .then((res) => {
+              setQuestions((questions) =>
+                questions.filter((_, index) => index > 0)
+              );
+              ref.current.map((e) => e.classList.remove("wrong"));
+              userLength = 0;
+              setUser({});
+              setAnswered((p) => p + 1);
+            })
+            .catch((err) => console.log(err.message));
+        }
+      }, 1000);
+    }
   };
+
   // const answer = "";
+  let userLength = Object.keys(user).length;
   firebase
     .database()
     .ref()
     .on("value", (snapshot) => {
-      Object.values(
+      if (userLength === 0) {
         Object.values(
-          snapshot.forEach((snap, i) => {
-            const option = snap.val();
-            for (let i in option) {
-              if (option[i] !== "no ans" && !Object.keys(user)) {
-                const obj = { A: 0, B: 1, C: 2, D: 3 };
+          Object.values(
+            snapshot.forEach((snap, i) => {
+              const option = snap.val();
+              for (let i in option) {
+                if (option[i] !== "no ans") {
+                  console.log(userLength);
+                  const obj = { A: 0, B: 1, C: 2, D: 3 };
 
-                const answerIndex = obj[option[i][0]];
-                const picked = question.answerOption[answerIndex].answerText;
-                const correctAnswer = question.correct;
-                const isCorrect = correctAnswer === picked;
+                  const answerIndex = obj[option[i][0]];
+                  const picked = question.answerOption[answerIndex].answerText;
+                  const correctAnswer = question.correct;
+                  const isCorrect = correctAnswer === picked;
 
-                setUser({ ans: option[i], isCorrect: isCorrect });
-                console.log(option[i], correctAnswer, picked, user);
-                // answer = option[i];
+                  // setUser();
+                  const u = { ans: option[i], isCorrect: isCorrect };
+                  console.log(answerIndex, u);
+                  handleOption(answerIndex, u);
+                  // answer = option[i];
+                }
               }
-            }
-          })
-        )
-      );
+            })
+          )
+        );
+      }
       // console.log(user);
     });
 
@@ -128,28 +142,37 @@ const Question = ({ questions, setQuestions }) => {
     };
   }, [time]);
   // const ref = useRef();
-  const handleOption = (index) => {
+  const handleOption = (index, data) => {
     // const text=
     // const element = ref.current[index];
     const picked = question.answerOption[index];
+    const contestant = data.ans;
+    console.log(contestant[1]);
     const obj = { A: 0, B: 1, C: 2, D: 3 };
     const option = Object.keys(obj).find((key) => obj[key] === index);
     const { answerText, isCorrect } = picked;
     console.log(answerText, isCorrect, option);
-    setUser({ ans: option + "1", isCorrect });
+    setUser(data);
+    userLength = 2;
+    // console.log(ref);
 
     ref.current.map((e, i) => {
-      e.classList.remove("pick");
-      e.classList.remove("correct");
-      e.classList.remove("wrong");
+      if (e.current === undefined) {
+        e.classList.remove("pick");
+        e.classList.remove("correct");
+        e.classList.remove("wrong");
+      }
 
       if (i === index) {
-        e.classList.add("pick");
+        if (e.current === undefined) {
+          e.classList.add("pick");
+          console.log(e);
+        }
       }
       return null;
     });
   };
-  const questionLength = questions.length + answered - 1;
+  const questionLength = questions.length + answered;
   return (
     <>
       {questions.length > 0 ? (
@@ -166,7 +189,7 @@ const Question = ({ questions, setQuestions }) => {
               >
                 <p>
                   <span>
-                    Question {answered}/{questionLength}
+                    Question {answered + 1}/{questionLength}
                   </span>
                 </p>
 
@@ -185,7 +208,7 @@ const Question = ({ questions, setQuestions }) => {
                   <button
                     key={i}
                     ref={(el) => (ref.current[i] = el)}
-                    onClick={() => handleOption(i)}
+                    // onClick={() => handleOption(i)}
                   >
                     {obj[i] +
                       ". " +
@@ -197,10 +220,15 @@ const Question = ({ questions, setQuestions }) => {
                 );
               })}
               {/* <p>Contester {user} have the floor</p> */}
+
               <div className="click">
-                <button className="btn" onClick={handleClick}>
-                  Next
-                </button>
+                {Object.keys(user).length ? (
+                  <button className="btn" onClick={handleClick}>
+                    Next
+                  </button>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

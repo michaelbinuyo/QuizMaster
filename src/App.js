@@ -28,6 +28,12 @@ export default function App() {
   });
   return (
     <div className="app">
+      {/* <img
+        class="unilorin-logo"
+        style={{}}
+        src="https://images-na.ssl-images-amazon.com/images/I/71CLbFCxOaL._SR600%2C315_PIWhiteStrip%2CBottomLeft%2C0%2C35_SCLZZZZZZZ_FMpng_BG255%2C255%2C255.png"
+        alt="logo"
+      /> */}
       <BrowserRouter>
         <Route path="/score" component={ScoreSection} />
         <Route path="/q/bonus/:id/">
